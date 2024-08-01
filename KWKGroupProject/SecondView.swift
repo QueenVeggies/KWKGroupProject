@@ -58,6 +58,19 @@ struct SecondView: View {
                                      
                     }
                     
+                    NavigationLink(destination: FourthView())
+                    {
+                        Capsule()
+                            .fill(.white)
+                            .frame(width: 200, height: 50)
+                            .shadow(color : .gray, radius : 4)
+                            .overlay(Text("Savings Goal")
+                                .bold()
+                                .foregroundStyle(.orange)
+                            )
+                                     
+                    }
+                    
                 }
             }
         }
