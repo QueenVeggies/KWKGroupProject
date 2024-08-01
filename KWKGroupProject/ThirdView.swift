@@ -40,10 +40,10 @@ struct ThirdView: View {
                     .opacity(1.0)
                 
                 Text("Remaining budget:")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(remainingBudget >= 0 ? .green : .red)
                 
                 Text("$\(remainingBudget, specifier: "%.2f")")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(remainingBudget >= 0 ? .green : .red)
                     .font(.title)
                     .bold()
                     .opacity(1.0)
@@ -61,7 +61,7 @@ struct ThirdView: View {
                         Button("+ Add a category") {
                             category1On = true
                         }
-                        .opacity(!category1On ? 1: 0)
+                        .opacity(!category1On ? 1 : 0)
                         .buttonStyle(.borderedProminent)
                         .tint(.orange)
                         .padding()
@@ -75,7 +75,7 @@ struct ThirdView: View {
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
-                                .onChange(of: value1) {
+                                .onChange(of: value1) { _ in
                                     calculateRemainingBudget()
                                 }
                         }
@@ -86,7 +86,7 @@ struct ThirdView: View {
                         Button("+ Add a category") {
                             category2On = true
                         }
-                        .opacity(!category2On ? 1: 0)
+                        .opacity(!category2On ? 1 : 0)
                         .buttonStyle(.borderedProminent)
                         .tint(.orange)
                         .padding()
@@ -100,7 +100,7 @@ struct ThirdView: View {
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
-                                .onChange(of: value2) {
+                                .onChange(of: value2) { _ in
                                     calculateRemainingBudget()
                                 }
                         }
@@ -111,7 +111,7 @@ struct ThirdView: View {
                         Button("+ Add a category") {
                             category3On = true
                         }
-                        .opacity(!category3On ? 1: 0)
+                        .opacity(!category3On ? 1 : 0)
                         .buttonStyle(.borderedProminent)
                         .tint(.orange)
                         .padding()
@@ -125,7 +125,7 @@ struct ThirdView: View {
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
-                                .onChange(of: value3) {
+                                .onChange(of: value3) { _ in
                                     calculateRemainingBudget()
                                 }
                         }
@@ -136,10 +136,17 @@ struct ThirdView: View {
         }
     }
     
-    func calculateRemainingBudget() {
+    private func calculateRemainingBudget() {
         let values = [value1, value2, value3]
         let totalValues = values.compactMap { Double($0) }.reduce(0, +)
+        let previousRemainingBudget = remainingBudget
         remainingBudget = totalBudget - totalValues
+
+        if remainingBudget >= 0 && previousRemainingBudget < 0 {
+            // Budget returned to a positive state
+        } else if remainingBudget < 0 && previousRemainingBudget >= 0 {
+            // Budget went into a deficit
+        }
     }
 }
 
