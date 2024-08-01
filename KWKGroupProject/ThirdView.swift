@@ -24,10 +24,18 @@ struct ThirdView: View {
             Color.teal.opacity(0.8)
                 .ignoresSafeArea()
             VStack(spacing: 20.0){
-                Text("Budgeting Map")
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                    .bold()
-                    .foregroundStyle(.white)
+                HStack{
+                    Text("Budgeting Map")
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .bold()
+                        .foregroundStyle(.white)
+                    
+                    Image("budgeting map")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 70)
+                    
+                }
                 
                 Text("Your weekly budget:")
                     .foregroundStyle(.white)
