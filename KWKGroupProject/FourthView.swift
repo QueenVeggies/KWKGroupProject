@@ -69,10 +69,13 @@ struct FourthView: View {
                 .padding()
                 
                 Form {
-                    Section(header: Text("Add New Goal")) {
+                    Section(header: Text("Add New Goal")
+                        .foregroundStyle(.white).font(.system(size: 16))) {
                         TextField("Goal Name", text: $newGoalName)
                             .textFieldStyle(PlainTextFieldStyle()) // Remove border
                             .textInputAutocapitalization(.none) // Disable automatic capitalization
+                            .foregroundColor(.orange)
+                            .bold()
                         TextField("Cost", text: $newGoalCost)
                             .keyboardType(.decimalPad)
                             .textFieldStyle(PlainTextFieldStyle()) // Remove border
@@ -81,12 +84,15 @@ struct FourthView: View {
                                 .foregroundColor(.blue)
                         }
                     }
+
                     
-                    Section(header: Text("Current Goals")) {
+                    Section(header: Text("Current Goals")
+                        .foregroundStyle(.white).font(.system(size: 16))) {
                         List(savingsGoals) { goal in
                             VStack(alignment: .leading) {
                                 Text(goal.name)
                                     .font(.headline)
+                                    
                                 Text("Cost: \(goal.targetAmount, specifier: "%.2f")")
                                 Text("Current: \(goal.currentAmount, specifier: "%.2f")")
                                     .frame(maxWidth: .infinity, alignment: .leading) // Left-justify the text
@@ -119,6 +125,7 @@ struct FourthView: View {
                         }
                     }
                 }
+                .scrollContentBackground(.hidden)
             }
         }
     }

@@ -25,12 +25,20 @@ struct ThirdView: View {
             Color.teal.opacity(0.8)
                 .ignoresSafeArea()
             VStack(spacing: 20.0){
-                Text("Budgeting Map")
-                    .font(.title)
-                    .bold()
-                    .foregroundStyle(.white)
-                
+                HStack {
+                    Text("Budgeting Map")
+                        .font(.title)
+                        .bold()
+                        .foregroundStyle(.white)
+                    
+                    Image("budgeting map")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 70)
+                }
                 Text("Your weekly budget:")
+                    .font(.system(size: 20))
+                    .bold()
                     .foregroundStyle(.white)
                 
                 Text("$\(totalBudget, specifier: "%.2f")")
@@ -40,15 +48,17 @@ struct ThirdView: View {
                     .opacity(1.0)
                 
                 Text("Remaining budget:")
-                    .foregroundStyle(remainingBudget >= 0 ? .green : .red)
+                    .foregroundStyle(remainingBudget >= 0 ? .white : .red)
+                    .font(.system(size: 20))
+                    .bold()
                 
                 Text("$\(remainingBudget, specifier: "%.2f")")
-                    .foregroundStyle(remainingBudget >= 0 ? .green : .red)
+                    .foregroundStyle(remainingBudget >= 0 ? .white : .red)
                     .font(.title)
                     .bold()
                     .opacity(1.0)
                 
-                Text("Split your weekly budget into categories! Examples of categories - food, clothing, technology")
+                Text("Split your weekly budget into categories! Examples of categories: food, clothing, technology")
                     .font(.headline)
                     .bold()
                     .foregroundStyle(.white)
@@ -65,16 +75,23 @@ struct ThirdView: View {
                         .buttonStyle(.borderedProminent)
                         .tint(.orange)
                         .padding()
+                        .shadow(color : .gray, radius : 4)
                     } else {
                         HStack {
                             TextField("Enter category here", text: $category1)
                                 .multilineTextAlignment(.center)
+                                .background(Color.white.opacity(0.4))
+                                .cornerRadius(7.0)
                                 .foregroundStyle(.white)
+                                .shadow(color : .gray, radius : 4)
+                                .font(.system(size: 25))
                             
                             TextField("$", text: $value1)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.center)
+                                .font(.system(size: 25))
                                 .foregroundStyle(.white)
+                                .bold()
                                 .onChange(of: value1) { _ in
                                     calculateRemainingBudget()
                                 }
@@ -90,16 +107,23 @@ struct ThirdView: View {
                         .buttonStyle(.borderedProminent)
                         .tint(.orange)
                         .padding()
+                        .shadow(color : .gray, radius : 4)
                     } else {
                         HStack {
                             TextField("Enter category here", text: $category2)
                                 .multilineTextAlignment(.center)
+                                .background(Color.white.opacity(0.4))
+                                .cornerRadius(7.0)
                                 .foregroundStyle(.white)
+                                .shadow(color : .gray, radius : 4)
+                                .font(.system(size: 25))
                             
                             TextField("$", text: $value2)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
+                                .font(.system(size: 25))
+                                .bold()
                                 .onChange(of: value2) { _ in
                                     calculateRemainingBudget()
                                 }
@@ -114,17 +138,25 @@ struct ThirdView: View {
                         .opacity(!category3On ? 1 : 0)
                         .buttonStyle(.borderedProminent)
                         .tint(.orange)
+                        .shadow(color : .gray, radius : 4)
                         .padding()
                     } else {
                         HStack {
                             TextField("Enter category here", text: $category3)
                                 .multilineTextAlignment(.center)
+                                .background(Color.white.opacity(0.4))
+                                .cornerRadius(7.0)
                                 .foregroundStyle(.white)
+                                .shadow(color : .gray, radius : 4)
+                                .font(.system(size: 25))
+
                             
                             TextField("$", text: $value3)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
+                                .font(.system(size: 25))
+                                .bold()
                                 .onChange(of: value3) { _ in
                                     calculateRemainingBudget()
                                 }
