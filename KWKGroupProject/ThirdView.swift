@@ -17,37 +17,36 @@ struct ThirdView: View {
     @State private var value1 = ""
     @State private var value2 = ""
     @State private var value3 = ""
-    
+    @State private var totalBudget: Double = 25.00
+    @State private var remainingBudget: Double = 25.00
     
     var body: some View {
         ZStack {
             Color.teal.opacity(0.8)
                 .ignoresSafeArea()
             VStack(spacing: 20.0){
-                HStack{
-                    Text("Budgeting Map")
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                        .bold()
-                        .foregroundStyle(.white)
-                    
-                    Image("budgeting map")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 60, height: 70)
-                    
-                }
+                Text("Budgeting Map")
+                    .font(.title)
+                    .bold()
+                    .foregroundStyle(.white)
                 
                 Text("Your weekly budget:")
                     .foregroundStyle(.white)
                 
-                Text("$25.00")
+                Text("$\(totalBudget, specifier: "%.2f")")
                     .foregroundStyle(.white)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .font(.title)
                     .bold()
                     .opacity(1.0)
                 
-
-
+                Text("Remaining budget:")
+                    .foregroundStyle(.white)
+                
+                Text("$\(remainingBudget, specifier: "%.2f")")
+                    .foregroundStyle(.white)
+                    .font(.title)
+                    .bold()
+                    .opacity(1.0)
                 
                 Text("Split your weekly budget into categories! Examples of categories - food, clothing, technology")
                     .font(.headline)
@@ -57,100 +56,90 @@ struct ThirdView: View {
                     .multilineTextAlignment(.center)
                     .padding()
                 
-                
-        
-                
                 VStack(spacing: 20.0) {
-                    if (!category1On)
-                    {
-                        Button("+ Add a category")
-                        {
+                    if !category1On {
+                        Button("+ Add a category") {
                             category1On = true
                         }
                         .opacity(!category1On ? 1: 0)
                         .buttonStyle(.borderedProminent)
                         .tint(.orange)
                         .padding()
-                        .multilineTextAlignment(.center)
-                    }
-                    else
-                    {
+                    } else {
                         HStack {
                             TextField("Enter category here", text: $category1)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
-
+                            
                             TextField("$", text: $value1)
+                                .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
-
+                                .onChange(of: value1) {
+                                    calculateRemainingBudget()
+                                }
                         }
                         .padding()
                     }
-                    if (!category2On)
-                    {
-                        Button("+ Add a category")
-                        {
+                    
+                    if !category2On {
+                        Button("+ Add a category") {
                             category2On = true
                         }
                         .opacity(!category2On ? 1: 0)
                         .buttonStyle(.borderedProminent)
                         .tint(.orange)
                         .padding()
-                    }
-                    
-                    else
-                    {
-                        HStack{
+                    } else {
+                        HStack {
                             TextField("Enter category here", text: $category2)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
-
+                            
                             TextField("$", text: $value2)
+                                .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.white)
-
-                        }
-                        .padding()
-                    }
-                    if (!category3On)
-                    {
-                        HStack {
-                            Button("+ Add a category")
-                            {
-                                category3On = true
-                            }
-                            .opacity(!category3On ? 1: 0)
-                            .buttonStyle(.borderedProminent)
-                            .tint(.orange)
-                            .padding()
-                        }
-                    }
-                    else
-                    {
-                        HStack{
-                            TextField("Enter category here", text: $category3)
-                                .multilineTextAlignment(.center)
-                                .foregroundStyle(.white)
-
-                            TextField("$", text: $value3)
-                                .multilineTextAlignment(.center)
-                                .foregroundStyle(.white)
-
+                                .onChange(of: value2) {
+                                    calculateRemainingBudget()
+                                }
                         }
                         .padding()
                     }
                     
+                    if !category3On {
+                        Button("+ Add a category") {
+                            category3On = true
+                        }
+                        .opacity(!category3On ? 1: 0)
+                        .buttonStyle(.borderedProminent)
+                        .tint(.orange)
+                        .padding()
+                    } else {
+                        HStack {
+                            TextField("Enter category here", text: $category3)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
+                            
+                            TextField("$", text: $value3)
+                                .keyboardType(.decimalPad)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
+                                .onChange(of: value3) {
+                                    calculateRemainingBudget()
+                                }
+                        }
+                        .padding()
+                    }
                 }
-            
-
-               
-               
-                
-               
             }
-            
         }
+    }
+    
+    func calculateRemainingBudget() {
+        let values = [value1, value2, value3]
+        let totalValues = values.compactMap { Double($0) }.reduce(0, +)
+        remainingBudget = totalBudget - totalValues
     }
 }
 
