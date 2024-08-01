@@ -22,7 +22,7 @@ struct SecondView: View {
                 
                     VStack(spacing: 20.0) {
                         //Displays firstName from screen 1 as [user]
-                        Text("Hello, \(String(firstName))")
+                        Text("Hello, \(String(firstName))!")
                             .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                             .bold()
                             .foregroundStyle(.white)
