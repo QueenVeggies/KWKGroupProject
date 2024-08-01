@@ -16,20 +16,20 @@ struct SavingsGoal: Identifiable {
 
 struct FourthView: View {
     @State private var newGoalName = ""
-    @State private var newGoalTargetAmount = ""
+    @State private var newGoalCost = ""
     @State private var savingsGoals: [SavingsGoal] = []
     @State private var editingGoal: SavingsGoal?
     @State private var newCurrentAmount = ""
     
     private func addNewGoal() {
-        guard let targetAmount = Double(newGoalTargetAmount), !newGoalName.isEmpty else {
+        guard let cost = Double(newGoalCost), !newGoalName.isEmpty else {
             // Handle invalid input
             return
         }
-        let newGoal = SavingsGoal(name: newGoalName, targetAmount: targetAmount, currentAmount: 0)
+        let newGoal = SavingsGoal(name: newGoalName, targetAmount: cost, currentAmount: 0)
         savingsGoals.append(newGoal)
         newGoalName = ""
-        newGoalTargetAmount = ""
+        newGoalCost = ""
     }
     
     private func updateGoal() {
@@ -71,8 +71,11 @@ struct FourthView: View {
                 Form {
                     Section(header: Text("Add New Goal")) {
                         TextField("Goal Name", text: $newGoalName)
-                        TextField("Target Amount", text: $newGoalTargetAmount)
+                            .textFieldStyle(PlainTextFieldStyle()) // Remove border
+                            .textInputAutocapitalization(.none) // Disable automatic capitalization
+                        TextField("Cost", text: $newGoalCost)
                             .keyboardType(.decimalPad)
+                            .textFieldStyle(PlainTextFieldStyle()) // Remove border
                         Button(action: addNewGoal) {
                             Text("Add Goal")
                                 .foregroundColor(.blue)
@@ -84,8 +87,9 @@ struct FourthView: View {
                             VStack(alignment: .leading) {
                                 Text(goal.name)
                                     .font(.headline)
-                                Text("Target: \(goal.targetAmount, specifier: "%.2f")")
+                                Text("Cost: \(goal.targetAmount, specifier: "%.2f")")
                                 Text("Current: \(goal.currentAmount, specifier: "%.2f")")
+                                    .frame(maxWidth: .infinity, alignment: .leading) // Left-justify the text
                                 Text("Progress: \(progress(for: goal), specifier: "%.1f")%")
                                 
                                 Button(action: {
@@ -100,8 +104,10 @@ struct FourthView: View {
                                     Text("Edit Goal: \(goal.name)")
                                         .font(.headline)
                                     
-                                    TextField("New Current Amount", text: $newCurrentAmount)
+                                    TextField("Current Amount", text: $newCurrentAmount)
                                         .keyboardType(.decimalPad)
+                                        .padding()
+                                        .textFieldStyle(RoundedBorderTextFieldStyle()) // Add border
                                     
                                     Button(action: updateGoal) {
                                         Text("Update")
