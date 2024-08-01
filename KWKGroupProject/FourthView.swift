@@ -79,6 +79,7 @@ struct FourthView: View {
                         TextField("Cost", text: $newGoalCost)
                             .keyboardType(.decimalPad)
                             .textFieldStyle(PlainTextFieldStyle()) // Remove border
+                            .foregroundColor(.orange)
                         Button(action: addNewGoal) {
                             Text("Add Goal")
                                 .foregroundColor(.blue)
@@ -92,11 +93,15 @@ struct FourthView: View {
                             VStack(alignment: .leading) {
                                 Text(goal.name)
                                     .font(.headline)
+                                    .foregroundColor(.orange)
                                     
                                 Text("Cost: \(goal.targetAmount, specifier: "%.2f")")
+                                    .foregroundColor(.orange)
                                 Text("Current: \(goal.currentAmount, specifier: "%.2f")")
                                     .frame(maxWidth: .infinity, alignment: .leading) // Left-justify the text
+                                    .foregroundColor(.orange)
                                 Text("Progress: \(progress(for: goal), specifier: "%.1f")%")
+                                    .foregroundColor(.orange)
                                 
                                 Button(action: {
                                     editingGoal = goal
@@ -109,11 +114,13 @@ struct FourthView: View {
                                 VStack {
                                     Text("Edit Goal: \(goal.name)")
                                         .font(.headline)
+                                        .foregroundColor(.orange)
                                     
                                     TextField("Current Amount", text: $newCurrentAmount)
                                         .keyboardType(.decimalPad)
                                         .padding()
                                         .textFieldStyle(RoundedBorderTextFieldStyle()) // Add border
+                                        .foregroundColor(.orange)
                                     
                                     Button(action: updateGoal) {
                                         Text("Update")
