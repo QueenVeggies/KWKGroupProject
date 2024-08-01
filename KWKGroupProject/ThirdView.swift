@@ -38,15 +38,18 @@ struct ThirdView: View {
                     .bold()
                     .opacity(1.0)
                 
+
+
                 
                 Text("Split your weekly budget into categories! Examples of categories - food, clothing, technology")
                     .font(.headline)
                     .bold()
                     .foregroundStyle(.white)
                     .tint(.orange)
+                    .multilineTextAlignment(.center)
                     .padding()
                 
-               
+                
         
                 
                 VStack(spacing: 20.0) {
@@ -67,8 +70,12 @@ struct ThirdView: View {
                         HStack {
                             TextField("Enter category here", text: $category1)
                                 .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
+
                             TextField("$", text: $value1)
                                 .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
+
                         }
                         .padding()
                     }
@@ -86,10 +93,17 @@ struct ThirdView: View {
                     
                     else
                     {
-                        TextField("Enter category here", text: $category2)
-                            .multilineTextAlignment(.center)
-                        TextField("Enter amount of money", text: $value2)
-                            .multilineTextAlignment(.center)
+                        HStack{
+                            TextField("Enter category here", text: $category2)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
+
+                            TextField("$", text: $value2)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
+
+                        }
+                        .padding()
                     }
                     if (!category3On)
                     {
@@ -106,10 +120,17 @@ struct ThirdView: View {
                     }
                     else
                     {
-                        TextField("Enter category here", text: $category3)
-                            .multilineTextAlignment(.center)
-                        TextField("Enter amount of money", text: $value3)
-                            .multilineTextAlignment(.center)
+                        HStack{
+                            TextField("Enter category here", text: $category3)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
+
+                            TextField("$", text: $value3)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
+
+                        }
+                        .padding()
                     }
                     
                 }
