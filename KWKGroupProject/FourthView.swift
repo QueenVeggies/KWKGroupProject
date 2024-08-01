@@ -18,6 +18,8 @@ struct FourthView: View {
     @State private var newGoalName = ""
     @State private var newGoalTargetAmount = ""
     @State private var savingsGoals: [SavingsGoal] = []
+    @State private var editingGoal: SavingsGoal?
+    @State private var newCurrentAmount = ""
     
     private func addNewGoal() {
         guard let targetAmount = Double(newGoalTargetAmount), !newGoalName.isEmpty else {
@@ -28,6 +30,19 @@ struct FourthView: View {
         savingsGoals.append(newGoal)
         newGoalName = ""
         newGoalTargetAmount = ""
+    }
+    
+    private func updateGoal() {
+        guard let editingGoal = editingGoal,
+              let newAmount = Double(newCurrentAmount) else {
+            // Handle invalid input
+            return
+        }
+        if let index = savingsGoals.firstIndex(where: { $0.id == editingGoal.id }) {
+            savingsGoals[index].currentAmount = newAmount
+            self.editingGoal = nil
+            newCurrentAmount = ""
+        }
     }
     
     private func progress(for goal: SavingsGoal) -> Double {
@@ -72,6 +87,28 @@ struct FourthView: View {
                                 Text("Target: \(goal.targetAmount, specifier: "%.2f")")
                                 Text("Current: \(goal.currentAmount, specifier: "%.2f")")
                                 Text("Progress: \(progress(for: goal), specifier: "%.1f")%")
+                                
+                                Button(action: {
+                                    editingGoal = goal
+                                }) {
+                                    Text("Edit")
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                            .sheet(item: $editingGoal) { goal in
+                                VStack {
+                                    Text("Edit Goal: \(goal.name)")
+                                        .font(.headline)
+                                    
+                                    TextField("New Current Amount", text: $newCurrentAmount)
+                                        .keyboardType(.decimalPad)
+                                    
+                                    Button(action: updateGoal) {
+                                        Text("Update")
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                .padding()
                             }
                         }
                     }
