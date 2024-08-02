@@ -2,8 +2,7 @@
 //  ThirdView.swift
 //  KWKGroupProject
 //
-//  Created by Jewel Domingo on 7/31/24.
-//
+
 
 import SwiftUI
 

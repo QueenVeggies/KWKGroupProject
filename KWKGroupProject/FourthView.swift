@@ -2,8 +2,7 @@
 //  FourthView.swift
 //  KWKGroupProject
 //
-//  Created by Shreenidhi Kunta on 8/1/24.
-//
+
 
 import SwiftUI
 

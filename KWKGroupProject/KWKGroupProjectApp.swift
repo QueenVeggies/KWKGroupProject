@@ -2,8 +2,6 @@
 //  KWKGroupProjectApp.swift
 //  KWKGroupProject
 //
-//  Created by Shreenidhi Kunta on 7/26/24.
-//
 
 import SwiftUI
 

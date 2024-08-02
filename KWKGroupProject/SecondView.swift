@@ -2,8 +2,7 @@
 //  SecondView.swift
 //  KWKGroupProject
 //
-//  Created by Shreenidhi Kunta on 7/30/24.
-//
+
 
 
 
